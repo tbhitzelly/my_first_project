@@ -1,6 +1,6 @@
 {% extends 'course/base.html' %}
 {% block content %}
-    {% if student.group == "male" %}
+    {% if student.gender == "male" %}
         <h1 style="color: blue;">{{ student.name }}</h1>
     {% else %}
         <h1 style="color: pink;">{{ student.name }}</h1>
