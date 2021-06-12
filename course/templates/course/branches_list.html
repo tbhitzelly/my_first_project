@@ -1,14 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% for branch in branches %}
-        <h1>{{ branch.name }}</h1>
-    {% endfor %}
-</body>
-</html>
+{% extends 'course/base.html' %}
+
+{% block content %}
+
+   
+    <h1 style="text-align: center;">Филиалы</h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Название</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Действие</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for branch in branches %}
+          <tr>
+            <th scope="row">{{ branch.id }}</th>
+            <td>{{ branch.name }}</td>
+            <td>{{ branch.address }}</td>
+            <td>
+                <a href="{% url 'branch_detail' branch.id %}" class='btn btn-primary btn-sm'>Подробнее</a>
+            </td>
+          </tr>
+        {% endfor %}  
+        </tbody>
+      </table>
+   
+{% endblock %}

@@ -1,30 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-    </style>
-</head>
-<body>
-    <table style="width:100%">
-        <tr>
-          <th>Name</th>
-          <th>Branch</th>
-        </tr>
+{% extends 'course/base.html' %}
 
-        {% for group in groups %}
-        <tr>
-          <td>{{ group.name }}</td>
-          <td>{{ group.branch }}</td>
-        </tr>
-        {% endfor %}
-      </table>
-      
-</body>
-</html>
+{% block content %}
+    <h1 style="text-align: center;">Группы</h1>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Филиал</th>
+                    <th scope="col">Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in groups %}
+                <tr>
+                    <th scope="row">{{ group.id }}</th>
+                    <td>{{ group.name }}</td>
+                    <td>{{ group.branch }}</td>
+                    <td>
+                        <a href="{% url 'group_detail' group.id %}" class='btn btn-primary btn-sm'>Подробнее</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}

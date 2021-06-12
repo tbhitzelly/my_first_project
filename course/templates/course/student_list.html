@@ -1,32 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-    </style>
-</head>
-<body>  
-    <table style="width: 100%">
-        <tr>
-            <th>Name</th>
-            <th>Phone_Number</th>
-            <th>Date_of_birth</th>
-        </tr>
-        
-        {% for student in student %}
-        <tr>
-            <td>{{student.name}}</td>
-            <td>{{student.phone_number}}</td>
-            <td>{{student.date_of_birth}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+{% extends 'course/base.html' %}
+{% block content %}
+    <h1 style="text-align: center;">Студенты</h1>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Номер телефона</th>
+                    <th scope="col">Пол</th>
+                    <th scope="col">Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <th scope="row">{{ student.id }}</th>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.phone_number }}</td>
+                    <td>{{ student.gender }}</td>
+                    <td>
+                        <a href="{% url 'student_detail' student.id %}" class='btn btn-primary btn-sm'>Подробнее</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-</body>
-</html>
+{% endblock %}
