@@ -12,4 +12,7 @@
     <p>Пол: <strong>{{ student.gender }} </strong></p>
     <p>Группа: <strong>{{ student.group }} </strong></p>
 
+
+    <a href="{% url 'student_edit' student.id %}" class='btn btn-primary'>Изменить</a>
+
 {% endblock %}

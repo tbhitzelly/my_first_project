@@ -8,4 +8,6 @@
             <li>{{ g.name }}</li>
         {% endfor %}    
     </ul>
+
+    <a href="{% url 'branch_edit' branch.id %}" class='btn btn-primary'>Изменить</a>
 {% endblock %}

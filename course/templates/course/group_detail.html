@@ -1,7 +1,7 @@
-{% extends 'course/base,html' %}
+{% extends 'course/base.html' %}
 {% block content %}
     <h1> {{ group.name }}</h1>
-    <p>Адрес: <strong>{{ group.branch }} </strong></p>
+    <p>Филиал: <strong>{{ group.Branch }} </strong></p>
 
     <p>Студенты группы: </p>
 
@@ -10,5 +10,8 @@
             <li>{{ s.name }}</li>
         {% endfor %}
     </ul>
+
+    <a href="{% url 'group_edit' group.id %}" class='btn btn-primary'>Изменить</a>
+    
 
 {% endblock %}
