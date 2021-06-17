@@ -11,6 +11,7 @@
             <th scope="col">Название</th>
             <th scope="col">Адрес</th>
             <th scope="col">Действие</th>
+            <th scope="col">Удаление</th>
           </tr>
         </thead>
         <tbody>
@@ -21,6 +22,9 @@
             <td>{{ branch.address }}</td>
             <td>
                 <a href="{% url 'branch_detail' branch.id %}" class='btn btn-primary btn-sm'>Подробнее</a>
+            </td>
+            <td>
+              <a href="{% url 'branch_delete' branch.id %}" class='btn btn-primary btn-sm'>Удалить</a>
             </td>
           </tr>
         {% endfor %}  

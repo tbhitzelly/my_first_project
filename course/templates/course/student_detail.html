@@ -12,7 +12,13 @@
     <p>Пол: <strong>{{ student.gender }} </strong></p>
     <p>Группа: <strong>{{ student.group }} </strong></p>
 
+    {% if student.photo %}
+    <img src="{{ student.photo.url }}" alt="" width="300"/>
+    {% endif %}
+
 
     <a href="{% url 'student_edit' student.id %}" class='btn btn-primary'>Изменить</a>
+
+   
 
 {% endblock %}

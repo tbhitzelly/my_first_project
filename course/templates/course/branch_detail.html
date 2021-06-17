@@ -9,5 +9,11 @@
         {% endfor %}    
     </ul>
 
+    {% if branch.photo %}
+    <img src="{{ branch.photo.url }}" alt="" width="300"/>
+    {% endif %}
+
     <a href="{% url 'branch_edit' branch.id %}" class='btn btn-primary'>Изменить</a>
+
+   
 {% endblock %}

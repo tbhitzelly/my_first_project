@@ -9,6 +9,7 @@
                     <th scope="col">Название</th>
                     <th scope="col">Филиал</th>
                     <th scope="col">Действие</th>
+                    <th scope="col">Удаление</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,9 @@
                     <td>{{ group.branch }}</td>
                     <td>
                         <a href="{% url 'group_detail' group.id %}" class='btn btn-primary btn-sm'>Подробнее</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'group_delete' group.id %}" class='btn btn-primary btn-sm'>Удалить</a>
                     </td>
                 </tr>
                 {% endfor %}
