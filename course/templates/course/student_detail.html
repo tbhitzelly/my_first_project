@@ -12,6 +12,8 @@
     <p>Пол: <strong>{{ student.gender }} </strong></p>
     <p>Группа: <strong>{{ student.group }} </strong></p>
 
+    <p>Добавил(а): {{ student.creator }}</p>
+
     {% if student.photo %}
     <img src="{{ student.photo.url }}" alt="" width="300"/>
     {% endif %}

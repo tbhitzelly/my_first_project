@@ -9,6 +9,7 @@ from .models import Group
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls.base import reverse_lazy
 
 
 
@@ -28,7 +29,7 @@ class BranchListView(ListView):
     context_object_name = 'branches'
 
 
-
+@login_required
 def branch_edit(request, branch_id):
     branch = get_object_or_404(Branch, pk=branch_id)
     if request.method == "POST":
@@ -57,7 +58,9 @@ def branch_create(request):
     if request.method == "POST":
         form = BranchForm(request.POST, request.FILES)
         if form.is_valid():
-            branch = form.save()
+            branch = form.save(commit=False)
+            branch.creator = request.user
+            branch.save()
             return redirect('branch_detail', branch_id=branch.id)
     else:
         form = BranchForm()
@@ -66,10 +69,17 @@ def branch_create(request):
 
 
 
-class BranchCreateView(CreateView):
+class BranchCreateView(LoginRequiredMixin,CreateView):
     model = Branch
     fields = ['name', 'address', 'photo']
     template_name = 'course/branch_create.html'
+    login_url = '/user/login/'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.creator = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
     
     
 
@@ -94,19 +104,19 @@ class BranchDetailView(DetailView):
 
 
 
-
+@login_required
 def branch_delete(request, branch_id):
     query = Branch.objects.get(pk=branch_id)
     query.delete()
     return HttpResponseRedirect("/course/branches/")
+    
 
 
-class BranchDeleteView(DeleteView):
-    def get_object(self, queryset = None):
-        branch = super(BranchDeleteView, self).get_object(queryset=queryset)
-        if not branch.owner == self.request.user:
-            raise Http404
-        return branch
+class BranchDeleteView(LoginRequiredMixin,DeleteView):
+    model = Branch
+    pk_url_kwarg = 'branch_id'
+    success_url = reverse_lazy('branches_list')
+    login_url = '/user/login/'
 
 
 def group_list(request):
@@ -143,12 +153,14 @@ class GroupDetailView(DetailView):
         return context
 
 
-
+@login_required
 def group_create(request):
     if request.method == "POST":
         form = GroupForm(request.POST, request.FILES)
         if form.is_valid():
-            group = form.save()
+            group = form.save(commit=False)
+            group.creator = request.user
+            group.save()
             return redirect('group_detail', group_id=group.id)
     else:
         form = GroupForm()
@@ -156,12 +168,20 @@ def group_create(request):
     return render(request, 'course/group_create.html', {'form': form})
 
 
-class GroupCreateView(CreateView):
+class GroupCreateView(LoginRequiredMixin,CreateView):
     model = Group
     fields = ['name', 'Branch', 'photo']
     template_name = 'course/group_create.html'
+    login_url = '/user/login/'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.creator = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
+@login_required
 def group_edit(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
     if request.method == "POST":
@@ -176,18 +196,26 @@ def group_edit(request, group_id):
 
 
 
-class GroupUpdateView(UpdateView):
+class GroupUpdateView(LoginRequiredMixin,UpdateView):
     model = Group
     fields = ['name', 'Branch', 'photo']
     template_name = 'course/group_edit.html'
     pk_url_kwarg = 'group_id'
+    login_url = '/user/login/'
 
  
-
+@login_required
 def group_delete(request, group_id):
     query = Group.objects.get(pk=group_id)
     query.delete()
     return HttpResponseRedirect("/course/groups/")
+
+
+class GroupDeleteView(LoginRequiredMixin,DeleteView):
+    model = Group
+    pk_url_kwarg = 'group_id'
+    success_url = reverse_lazy('group_list')
+    login_url = '/user/login/'
 
 
 
@@ -216,11 +244,14 @@ class StudentDetailView(DetailView):
     pk_url_kwarg = 'student_id'
 
 
+@login_required
 def student_create(request):
     if request.method == "POST":
         form = StudentForm(request.POST, request.FILES)
         if form.is_valid():
-            student = form.save()
+            student = form.save(commit=False)
+            student.creator = request.user
+            student.save()
             return redirect('student_detail', student_id=student.id)
     else:
         form = StudentForm()
@@ -228,14 +259,21 @@ def student_create(request):
     return render(request, 'course/student_create.html', {'form': form})
 
 
-class StudentCreateView(CreateView):
+class StudentCreateView(LoginRequiredMixin,CreateView):
     model = Student
     fields = ['name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo']
     template_name = 'course/student_create.html'
+    login_url = '/user/login/'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.creator = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 
-
+@login_required
 def student_edit(request, student_id):
     student = get_object_or_404(Student, pk=student_id)
     if request.method == "POST":
@@ -249,17 +287,25 @@ def student_edit(request, student_id):
     return render(request, 'course/student_create.html', {'form': form})
 
 
-class StudentUpdateView(UpdateView):
+class StudentUpdateView(LoginRequiredMixin,UpdateView):
     model = Student
     fields = ['name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo']
     template_name = 'course/student_edit.html'
     pk_url_kwarg = 'student_id'
+    login_url = '/user/login/'
 
 
 
 
-
+@login_required
 def student_delete(request, student_id):
     query = Student.objects.get(pk=student_id)
     query.delete()
     return HttpResponseRedirect("/course/students/")
+
+
+class StudentDeleteView(LoginRequiredMixin,DeleteView):
+    model = Student
+    pk_url_kwarg = 'student_id'
+    success_url = reverse_lazy('students_list')
+    login_url = '/user/login/'

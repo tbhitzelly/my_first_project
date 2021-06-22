@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
+
 
 
 class Branch(models.Model):
@@ -10,7 +12,7 @@ class Branch(models.Model):
     name = models.CharField(max_length=100, null=False)
     address = models.CharField(max_length=300, null=True)
     photo = models.ImageField(upload_to='branches/', null=True, blank=True)
-
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
       return self.name
@@ -28,6 +30,7 @@ class Group(models.Model):
     name = models.CharField(max_length=100, null=False)
     Branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='groups/', null=True, blank=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.name
@@ -57,6 +60,7 @@ class Student(models.Model):
     gender = models.CharField(choices=GENDER_CHOICES, max_length=6, default=MALE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     photo = models.ImageField(upload_to='students/', null=True, blank=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
 
 
     def __str__(self):

@@ -3,11 +3,14 @@
     <h1>{{ branch.name }}</h1>
     <p>Адрес: <strong>{{ branch.address }}</strong></p>
     <p>Группы:</p>
+    
     <ul>
         {% for g in groups %}
             <li>{{ g.name }}</li>
         {% endfor %}    
     </ul>
+
+    <p>Добавил(а): {{ branch.creator }}</p>
 
     {% if branch.photo %}
     <img src="{{ branch.photo.url }}" alt="" width="300"/>

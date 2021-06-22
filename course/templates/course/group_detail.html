@@ -11,6 +11,8 @@
         {% endfor %}
     </ul>
 
+    <p>Добавил(а): {{ group.creator }}</p>
+
     {% if group.photo %}
     <img src="{{ group.photo.url }}" alt="" width="300"/>
     {% endif %}
