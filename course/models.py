@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Branch(models.Model):
@@ -15,6 +16,10 @@ class Branch(models.Model):
       return self.name
 
 
+    def get_absolute_url(self):
+        return reverse("branch_detail", kwargs={"branch_id": self.pk})
+
+
 class Group(models.Model):
     class Meta:
         verbose_name='группа'
@@ -27,7 +32,8 @@ class Group(models.Model):
     def __str__(self):
         return self.name
 
-
+    def get_absolute_url(self):
+        return reverse("group_detail", kwargs={"group_id": self.pk})
 
 
 class Student(models.Model):
@@ -55,3 +61,7 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+
+    def get_absolute_url(self):
+        return reverse("student_detail", kwargs={"student_id": self.pk})
