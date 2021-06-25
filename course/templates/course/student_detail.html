@@ -13,9 +13,19 @@
     <p>Группа: <strong>{{ student.group }} </strong></p>
 
     <p>Добавил(а): {{ student.creator }}</p>
+    <p>Курсы: </p>
+
+    <ul>
+       
+        {%for student in students %}
+        <li>{{ student.courses.name }}</li>
+        {% endfor%}
+   
+        
+    </ul>
 
     {% if student.photo %}
-    <img src="{{ student.photo.url }}" alt="" width="300"/>
+        <img src="{{ student.photo.url }}" alt="" width="300"/>
     {% endif %}
 
 

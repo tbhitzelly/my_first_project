@@ -16,4 +16,6 @@ class GroupForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ('name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo')
+        fields = ('name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo', 'courses')
+
+        

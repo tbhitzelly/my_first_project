@@ -261,7 +261,7 @@ def student_create(request):
 
 class StudentCreateView(LoginRequiredMixin,CreateView):
     model = Student
-    fields = ['name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo']
+    fields = ['name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo', 'courses']
     template_name = 'course/student_create.html'
     login_url = '/user/login/'
 
@@ -289,7 +289,7 @@ def student_edit(request, student_id):
 
 class StudentUpdateView(LoginRequiredMixin,UpdateView):
     model = Student
-    fields = ['name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo']
+    fields = ['name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo', 'courses']
     template_name = 'course/student_edit.html'
     pk_url_kwarg = 'student_id'
     login_url = '/user/login/'
