@@ -17,8 +17,8 @@
 
     <ul>
        
-        {%for student in students %}
-        <li>{{ student.courses.name }}</li>
+        {%for course in courses %}
+            <li>{{ course.name }}</li>
         {% endfor%}
    
         

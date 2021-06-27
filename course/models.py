@@ -76,7 +76,7 @@ class Student(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     photo = models.ImageField(upload_to='students/', null=True, blank=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
-    courses = models.ManyToManyField(Course, null=True)
+    courses = models.ManyToManyField(Course)
 
 
 

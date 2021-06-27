@@ -7,6 +7,7 @@ urlpatterns = [
     path('branches/create/', views.BranchCreateView.as_view(), name='branch_create'),
     path('branches/<int:branch_id>/edit/', views.BranchUpdateView.as_view(), name='branch_edit'),
     path('branches/<int:branch_id>/delete/', views.BranchDeleteView.as_view(), name='branch_delete'),
+    path('branches/random/', views.branch_random, name = 'branch_random'),
     
     
     path('groups/', views.GroupListView.as_view(), name='group_list'),
@@ -16,9 +17,11 @@ urlpatterns = [
     path('group/<int:group_id>/delete/', views.GroupDeleteView.as_view(), name='group_delete'),
     
     
+    
     path('students/', views.StudentListView.as_view(), name='student_list'),
     path('students/<int:student_id>/', views.StudentDetailView.as_view(), name='student_detail'),
     path('students/create/', views.StudentCreateView.as_view(), name='student_create'),
     path('students/<int:student_id>/edit/', views.StudentUpdateView.as_view(), name='student_edit'),
     path('students/<int:student_id>/delete/', views.StudentDeleteView.as_view(), name='student_delete'),
+    path('students/random/', views.student_random, name='student_random')
 ]

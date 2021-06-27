@@ -1,15 +1,16 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import Http404, request
-from course.forms import GroupForm, StudentForm, BranchForm
+from course.forms import BranchForm, GroupForm, StudentForm
 from django.http import HttpResponse
 from .models import Branch
 from .models import Student
-from .models import Group
+from .models import Group, Course
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls.base import reverse_lazy
+import random
 
 
 
@@ -117,6 +118,14 @@ class BranchDeleteView(LoginRequiredMixin,DeleteView):
     pk_url_kwarg = 'branch_id'
     success_url = reverse_lazy('branches_list')
     login_url = '/user/login/'
+
+
+
+def branch_random(request):
+    branches = Branch.objects.all()
+    random_branch = random.choice(branches)
+    my_context = {'branches': random_branch}
+    return render(request, 'course/branch_detail.html', context=my_context)
 
 
 def group_list(request):
@@ -244,6 +253,12 @@ class StudentDetailView(DetailView):
     pk_url_kwarg = 'student_id'
 
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['courses'] = Course.objects.filter(student=self.object)
+        return context
+
+
 @login_required
 def student_create(request):
     if request.method == "POST":
@@ -309,3 +324,14 @@ class StudentDeleteView(LoginRequiredMixin,DeleteView):
     pk_url_kwarg = 'student_id'
     success_url = reverse_lazy('students_list')
     login_url = '/user/login/'
+
+
+
+def student_random(request):
+    students = Student.objects.all()
+    random_student = random.choice(students)
+    my_context = {'student': random_student}
+    return render(request, 'course/student_detail.html', context=my_context)
+
+
+

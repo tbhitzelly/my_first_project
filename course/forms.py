@@ -18,4 +18,3 @@ class StudentForm(forms.ModelForm):
         model = Student
         fields = ('name', 'date_of_birth', 'address', 'phone_number', 'gender', 'group', 'photo', 'courses')
 
-        
