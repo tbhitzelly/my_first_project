@@ -77,6 +77,7 @@ class Student(models.Model):
     photo = models.ImageField(upload_to='students/', null=True, blank=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
     courses = models.ManyToManyField(Course)
+    age = models.PositiveIntegerField(null=True)
 
 
 

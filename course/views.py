@@ -11,6 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls.base import reverse_lazy
 import random
+from rest_framework.views import APIView
+from course.serializers import *
+from rest_framework.response import Response
+from rest_framework import status
 
 
 
@@ -124,7 +128,7 @@ class BranchDeleteView(LoginRequiredMixin,DeleteView):
 def branch_random(request):
     branches = Branch.objects.all()
     random_branch = random.choice(branches)
-    my_context = {'branches': random_branch}
+    my_context = {'branch': random_branch}
     return render(request, 'course/branch_detail.html', context=my_context)
 
 
@@ -227,6 +231,14 @@ class GroupDeleteView(LoginRequiredMixin,DeleteView):
     login_url = '/user/login/'
 
 
+def group_random(request):
+    group = Group.objects.all()
+    random_group = random.choice(group)
+    my_context = {'group': random_group}
+    return render(request, 'course/group_detail.html', context=my_context)
+
+
+
 
 def student_list(request):
     students = Student.objects.all()
@@ -322,7 +334,7 @@ def student_delete(request, student_id):
 class StudentDeleteView(LoginRequiredMixin,DeleteView):
     model = Student
     pk_url_kwarg = 'student_id'
-    success_url = reverse_lazy('students_list')
+    success_url = reverse_lazy('student_list')
     login_url = '/user/login/'
 
 
@@ -330,8 +342,43 @@ class StudentDeleteView(LoginRequiredMixin,DeleteView):
 def student_random(request):
     students = Student.objects.all()
     random_student = random.choice(students)
-    my_context = {'student': random_student}
+    courses = random_student.courses.all
+    my_context = {'student': random_student, 'courses': courses}
     return render(request, 'course/student_detail.html', context=my_context)
 
 
 
+class BranchAPIView(APIView):
+
+
+    def get(self, request, format=None):
+        branches = Branch.objects.all()
+        serializer = BranchSerializer(branches, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+    def post(self, request, format=None):
+        serializer = BranchSerializer(data=request.data)
+        branch_save = serializer.save()
+
+        return Response(branch_save, status=status.HTTP_201_CREATED)
+
+
+class GroupAPIView(APIView):
+
+    def get(self, request, format=None):
+        groups = Group.objects.all()
+        serializer = GroupSerializer(groups, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+class StudentAPIView(APIView):
+
+    def get(self, request, format=None):
+        students = Student.objects.all()
+        serializer = StudentSerializer(students, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
