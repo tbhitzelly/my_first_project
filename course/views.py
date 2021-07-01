@@ -1,8 +1,6 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import Http404, request
 from course.forms import BranchForm, GroupForm, StudentForm
-from django.http import HttpResponse
 from .models import Branch
 from .models import Student
 from .models import Group, Course
@@ -11,10 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls.base import reverse_lazy
 import random
-from rest_framework.views import APIView
-from course.serializers import *
-from rest_framework.response import Response
-from rest_framework import status
+
 
 
 
@@ -348,37 +343,3 @@ def student_random(request):
 
 
 
-class BranchAPIView(APIView):
-
-
-    def get(self, request, format=None):
-        branches = Branch.objects.all()
-        serializer = BranchSerializer(branches, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-    def post(self, request, format=None):
-        serializer = BranchSerializer(data=request.data)
-        branch_save = serializer.save()
-
-        return Response(branch_save, status=status.HTTP_201_CREATED)
-
-
-class GroupAPIView(APIView):
-
-    def get(self, request, format=None):
-        groups = Group.objects.all()
-        serializer = GroupSerializer(groups, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-
-class StudentAPIView(APIView):
-
-    def get(self, request, format=None):
-        students = Student.objects.all()
-        serializer = StudentSerializer(students, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
