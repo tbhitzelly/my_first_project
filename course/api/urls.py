@@ -3,9 +3,10 @@ from course.api import views
 
 
 urlpatterns = [
-    path('v1/branches/', views.BranchAPIView.as_view(), name='branches'),
-    path('v1/branches/<int:pk>/', views.BranchDetailAPIView.as_view(), name='branch_detail'),
-    path('v1/groups/', views.GroupAPIView.as_view(), name='groups'),
-    
-
+    path('v1/branches/', views.BranchListView.as_view(), name='branches'),
+    path('v1/branches/<int:pk>/', views.BranchDetailView.as_view(), name='branch_detail'),
+    path('v1/groups/', views.GroupListView.as_view(), name='groups'),
+    path('v1/groups/<int:pk>/', views.GroupDetailView.as_view(), name='group_detail'),
+    path('v1/students/', views.StudentListView.as_view(), name='students'),
+    path('v1/students/<int:pk>/', views.StudentDetailView.as_view(), name='student_detail'),
 ]
