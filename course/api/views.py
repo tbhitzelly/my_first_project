@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from course.api.serializers import *
 from course.models import Branch, Student, Group
-from rest_framework import status, generics, mixins
+from rest_framework import status, generics, mixins, viewsets
 
 
 # class BranchListView(generics.ListCreateAPIView):
@@ -16,37 +16,42 @@ from rest_framework import status, generics, mixins
 #     serializer_class = BranchModelSerializer
 
 
-class BranchListView(mixins.CreateModelMixin,
-                     mixins.ListModelMixin,
-                     generics.GenericAPIView):
+class BranchViewSet(viewsets.ModelViewSet):
     queryset = Branch.objects.all()
     serializer_class = BranchModelSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class BranchDetailView(mixins.DestroyModelMixin,
-                       mixins.UpdateModelMixin,
-                       mixins.RetrieveModelMixin,
-                       generics.GenericAPIView):
-    queryset = Branch.objects.all()
-    serializer_class = BranchModelSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+# class BranchListView(mixins.CreateModelMixin,
+#                      mixins.ListModelMixin,
+#                      generics.GenericAPIView):
+#     queryset = Branch.objects.all()
+#     serializer_class = BranchModelSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+#
+#
+# class BranchDetailView(mixins.DestroyModelMixin,
+#                        mixins.UpdateModelMixin,
+#                        mixins.RetrieveModelMixin,
+#                        generics.GenericAPIView):
+#     queryset = Branch.objects.all()
+#     serializer_class = BranchModelSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def patch(self, request, *args, **kwargs):
+#         return self.partial_update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
 
 
 # class BranchAPIView(APIView):
@@ -94,6 +99,12 @@ class BranchDetailView(mixins.DestroyModelMixin,
 #         branch.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupModelSerializer
+
+
 # class GroupListView(generics.ListCreateAPIView):
 #     queryset = Group.objects.all()
 #     serializer_class = GroupModelSerializer
@@ -104,37 +115,37 @@ class BranchDetailView(mixins.DestroyModelMixin,
 #     serializer_class = GroupModelSerializer
 
 
-class GroupListView(mixins.CreateModelMixin,
-                     mixins.ListModelMixin,
-                     generics.GenericAPIView):
-    queryset = Group.objects.all()
-    serializer_class = GroupModelSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class GroupDetailView(mixins.DestroyModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.RetrieveModelMixin,
-                      generics.GenericAPIView):
-    queryset = Group.objects.all()
-    serializer_class = GroupModelSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+# class GroupListView(mixins.CreateModelMixin,
+#                      mixins.ListModelMixin,
+#                      generics.GenericAPIView):
+#     queryset = Group.objects.all()
+#     serializer_class = GroupModelSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+#
+#
+# class GroupDetailView(mixins.DestroyModelMixin,
+#                       mixins.UpdateModelMixin,
+#                       mixins.RetrieveModelMixin,
+#                       generics.GenericAPIView):
+#     queryset = Group.objects.all()
+#     serializer_class = GroupModelSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def patch(self, request, *args, **kwargs):
+#         return self.partial_update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
 
 
 # class GroupAPIView(APIView):
@@ -189,36 +200,42 @@ class GroupDetailView(mixins.DestroyModelMixin,
     #     queryset = Student.objects.all()
     #     serializer_class = StudentModelSerializer
 
-class StudentListView(mixins.CreateModelMixin,
-                      mixins.ListModelMixin,
-                      generics.GenericAPIView):
+
+class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentModelSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+# class StudentListView(mixins.CreateModelMixin,
+#                       mixins.ListModelMixin,
+#                       generics.GenericAPIView):
+#     queryset = Student.objects.all()
+#     serializer_class = StudentModelSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+#
+# class StudentDetailView(mixins.DestroyModelMixin,
+#                         mixins.UpdateModelMixin,
+#                         mixins.RetrieveModelMixin,
+#                         generics.GenericAPIView):
+#     queryset = Student.objects.all()
+#     serializer_class = StudentModelSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
 
-class StudentDetailView(mixins.DestroyModelMixin,
-                        mixins.UpdateModelMixin,
-                        mixins.RetrieveModelMixin,
-                        generics.GenericAPIView):
-    queryset = Student.objects.all()
-    serializer_class = StudentModelSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+    # def patch(self, request, *args, **kwargs):
+    #     return self.partial_update(request, *args, **kwargs)
+    #
+    # def delete(self, request, *args, **kwargs):
+    #     return self.destroy(request, *args, **kwargs)
 
 
 # class StudentAPIView(APIView):
@@ -264,3 +281,8 @@ class StudentDetailView(mixins.DestroyModelMixin,
 #         student = self.get_object(pk)
 #         student.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CourseViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = CourseModelSerializer

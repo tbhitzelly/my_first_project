@@ -30,8 +30,14 @@ class BranchModelSerializer(serializers.ModelSerializer):
 class GroupModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('name', 'Branch', 'photo')
+        fields = '__all__'
 
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['Branch'] = BranchModelSerializer(instance.Branch).data
+        data['course'] = CourseModelSerializer(instance.course).data
+        return data
 
 # class GroupSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
@@ -50,11 +56,23 @@ class GroupModelSerializer(serializers.ModelSerializer):
 #         return instance
 
 
+class CourseModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+
 class StudentModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
 
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['group'] = GroupModelSerializer(instance.group).data
+        data['courses'] = CourseModelSerializer(instance.courses).data
+        return data
 
 # class StudentSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
@@ -79,4 +97,10 @@ class StudentModelSerializer(serializers.ModelSerializer):
 #
 #         instance.save()
 #         return instance
+
+
+class CourseModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'
 

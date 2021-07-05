@@ -4,7 +4,6 @@ from django.dispatch import receiver
 from datetime import date
 
 
-
 @receiver([post_save], sender=Student)
 def my_signal(sender, instance, created, **kwargs):
     if created:
@@ -14,8 +13,9 @@ def my_signal(sender, instance, created, **kwargs):
         instance.age = age
         instance.save()
 
-#@receiver([post_save], sender=Group)
-#def signal_group(sender, instance, created, **kwargs):
-    #counter = Group.objects.filter(name = instance)
-    #res = counter.count
-    #print(res)
+
+# @receiver([post_save], sender=Group)
+# def signal_group(sender, instance, created, **kwargs):
+#     counter = Group.objects.filter(name=instance)
+#     res = counter.count
+#     print(res)
