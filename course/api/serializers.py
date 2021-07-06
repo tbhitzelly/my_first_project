@@ -5,7 +5,8 @@ from course.models import *
 class BranchModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Branch
-        fields = ('id', 'name', 'address', 'photo')
+        fields = ('id', 'name', 'address', 'photo', 'creator')
+        read_only_fields = ('creator', )
 
 
 
@@ -31,6 +32,7 @@ class GroupModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = '__all__'
+        read_only_fields = ('creator', )
 
 
     def to_representation(self, instance):
@@ -66,7 +68,7 @@ class StudentModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
-
+        read_only_fields = ('creator', )
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -99,8 +101,5 @@ class StudentModelSerializer(serializers.ModelSerializer):
 #         return instance
 
 
-class CourseModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Course
-        fields = '__all__'
+
 

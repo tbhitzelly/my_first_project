@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from course.api.serializers import *
 from course.models import Branch, Student, Group
 from rest_framework import status, generics, mixins, viewsets
+from rest_framework.permissions import IsAuthenticated
 
 
 # class BranchListView(generics.ListCreateAPIView):
@@ -19,6 +20,10 @@ from rest_framework import status, generics, mixins, viewsets
 class BranchViewSet(viewsets.ModelViewSet):
     queryset = Branch.objects.all()
     serializer_class = BranchModelSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
 
 # class BranchListView(mixins.CreateModelMixin,
@@ -103,6 +108,10 @@ class BranchViewSet(viewsets.ModelViewSet):
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupModelSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
 
 # class GroupListView(generics.ListCreateAPIView):
@@ -204,6 +213,10 @@ class GroupViewSet(viewsets.ModelViewSet):
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentModelSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
 
 # class StudentListView(mixins.CreateModelMixin,
@@ -286,3 +299,4 @@ class StudentViewSet(viewsets.ModelViewSet):
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = CourseModelSerializer
+    permission_classes = [IsAuthenticated]
