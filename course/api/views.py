@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from course.api.serializers import *
 from course.models import Branch, Student, Group
-from rest_framework import status, generics, mixins, viewsets
+from rest_framework import status, generics, mixins, viewsets, filters
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 # class BranchListView(generics.ListCreateAPIView):
@@ -21,6 +22,11 @@ class BranchViewSet(viewsets.ModelViewSet):
     queryset = Branch.objects.all()
     serializer_class = BranchModelSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    search_fields = ['name', 'address']
+    ordering_fields = ['name', 'address', 'manager']
+    ordering = ['name']
+    filterset_fields = ['creator', 'manager']
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -109,6 +115,11 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupModelSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    search_fields = ['name', 'Branch']
+    ordering_fields = ['name', 'Branch']
+    ordering = ['name']
+    filterset_fields = ['creator']
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -214,6 +225,11 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentModelSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    search_fields = ['name', 'date_of_birth', 'address', 'courses']
+    ordering_fields = ['name', 'address', 'courses', 'group']
+    ordering = ['name']
+    filterset_fields = ['creator']
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
